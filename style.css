@@ -1,12 +1,45 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .product {
     border: 1px solid #ccc;
+    border-radius: 8px;
     padding: 15px;
-    margin-bottom: 10px;
+    margin: 10px;
+    background-color: white;
+    width: 300px; /* Set a fixed width for product boxes */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+    width: 200px; /* or max-width: 100%; for responsive */
+    height: 200px; /* Fixed height */
+    object-fit: cover; /* Ensures the image covers the space */
+    border-radius: 8px; /* Optional */
+}
+
+.product h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.product p {
+    color: #555;
 }
 
 .buy-button {
@@ -15,8 +48,56 @@ body {
     background-color: #4CAF50;
     color: white;
     text-decoration: none;
+    border-radius: 5px;
 }
 
 .buy-button:hover {
+    background-color: #45a049;
+}
+
+.product-detail, section {
+    text-align: center;
+}
+
+blockquote {
+    font-style: italic;
+    color: #555;
+    border-left: 5px solid #4CAF50;
+    padding-left: 15px;
+    margin: 10px 0;
+}
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
     background-color: #45a049;
 }
