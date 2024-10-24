@@ -14,7 +14,7 @@
             <a href="about.php">About Us</a>
             <a href="testimonials.php">Testimonials</a>
             <a href="login.php">Login</a>
-            <a href="register.php">Create Account</a>
+            <a href="create_account.php">Create Account</a>
         </nav>
     </header>
 

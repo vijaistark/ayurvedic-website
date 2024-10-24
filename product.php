@@ -1,66 +1,49 @@
 <?php
-// Get the product ID from the URL
-$productId = $_GET['id'];
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Define the products array
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+
+// Logout functionality
+if (isset($_GET['logout'])) {
+    session_destroy(); // Destroy the session
+    header("Location: login.php"); // Redirect to login page
+    exit;
+}
+
+// Product data
 $products = [
     1 => [
         'name' => 'Ashwagandha',
         'description' => 'Natural stress relief and energy booster.',
         'image' => 'images/ashwagandha.jpg',
-        'reviews' => [
-            'Great for reducing stress!',
-            'Helped me sleep better at night.',
-        ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     2 => [
         'name' => 'Triphala',
         'description' => 'Effective detox and digestive aid.',
         'image' => 'images/triphala.jpg',
-        'reviews' => [
-            'A fantastic herbal supplement!',
-            'Very helpful for digestion.',
-        ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     3 => [
         'name' => 'Neem Oil',
         'description' => 'Anti-inflammatory and skin care solution.',
         'image' => 'images/neem_oil.jpg',
-        'reviews' => [
-            'Works wonders for my skin!',
-            'Very effective against acne.',
-        ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     4 => [
         'name' => 'Tulsi',
         'description' => 'Immunity booster and respiratory support.',
         'image' => 'images/tulsi.jpg',
-        'reviews' => [
-            'Great for improving immunity!',
-            'Helps with respiratory issues.',
-        ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     5 => [
         'name' => 'Brahmi',
         'description' => 'Improves brain function and reduces anxiety.',
         'image' => 'images/brahmi.jpg',
-        'reviews' => [
-            'Amazing for focus and memory!',
-            'Reduced my anxiety levels significantly.',
-        ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
 ];
-
-// Get the product details based on the product ID
-$product = $products[$productId];
-
-// Define Razorpay key ID here or fetch it from an environment variable for better security
-$keyId = 'rzp_live_wqPZCNnh7ArGUx'; // Replace with your actual Razorpay Key ID
 ?>
 
 <!DOCTYPE html>
@@ -68,44 +51,26 @@ $keyId = 'rzp_live_wqPZCNnh7ArGUx'; // Replace with your actual Razorpay Key ID
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $product['name']; ?></title>
+    <title>Products</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="product-style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
-        <h1><?php echo $product['name']; ?></h1>
+        <h1>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></h1>
+        <nav>
+            <a href="products.php?logout=true">Logout</a> <!-- Logout link -->
+        </nav>
     </header>
-    <div class="product-detail">
-        <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
-        <p><strong>Description:</strong> <?php echo $product['description']; ?></p>
-        
-        <h3>Reviews:</h3>
-        <ul>
-            <?php foreach ($product['reviews'] as $review): ?>
-                <li><?php echo $review; ?></li>
-            <?php endforeach; ?>
-        </ul>
 
-        <!-- Buy Now Button -->
-        <form id="razorpay-form" style="display: none;">
-            <script src="https://checkout.razorpay.com/v1/payment-button.js"
-                    data-payment_button_id="<?php echo $product['payment_button_id']; ?>"
-                    async>
-            </script>
-        </form>
-
-        <button id="pay-button" class="buy-button">Buy Now</button>
+    <div class="product-container">
+        <?php foreach ($products as $productId => $product): ?>
+            <div class="product">
+                <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
+                <h2><?php echo $product['name']; ?></h2>
+                <p><?php echo $product['description']; ?></p>
+                <a href="product.php?id=<?php echo $productId; ?>" class="buy-button">View Product</a>
+            </div>
+        <?php endforeach; ?>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $("#pay-button").click(function() {
-                // Show the Razorpay payment button when the Buy Now button is clicked
-                $("#razorpay-form").toggle();
-            });
-        });
-    </script>
 </body>
 </html>
