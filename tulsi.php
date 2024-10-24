@@ -1,8 +1,7 @@
 <?php
-// Get the product ID from the URL
-$productId = $_GET['id'];
+$productId = 4;
 
-// Define the products array
+// Same products array, just add Tulsi's information as shown above.
 $products = [
     1 => [
         'name' => 'Ashwagandha',
@@ -12,7 +11,6 @@ $products = [
             'Great for reducing stress!',
             'Helped me sleep better at night.',
         ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     2 => [
         'name' => 'Triphala',
@@ -22,7 +20,6 @@ $products = [
             'A fantastic herbal supplement!',
             'Very helpful for digestion.',
         ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     3 => [
         'name' => 'Neem Oil',
@@ -32,7 +29,6 @@ $products = [
             'Works wonders for my skin!',
             'Very effective against acne.',
         ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
     4 => [
         'name' => 'Tulsi',
@@ -42,7 +38,7 @@ $products = [
             'Great for improving immunity!',
             'Helps with respiratory issues.',
         ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
+        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Replace with your actual Razorpay payment button ID
     ],
     5 => [
         'name' => 'Brahmi',
@@ -52,15 +48,10 @@ $products = [
             'Amazing for focus and memory!',
             'Reduced my anxiety levels significantly.',
         ],
-        'payment_button_id' => 'pl_PBnoor1Qijgaql' // Razorpay payment button ID
     ],
 ];
 
-// Get the product details based on the product ID
 $product = $products[$productId];
-
-// Define Razorpay key ID here or fetch it from an environment variable for better security
-$keyId = 'rzp_live_wqPZCNnh7ArGUx'; // Replace with your actual Razorpay Key ID
 ?>
 
 <!DOCTYPE html>
@@ -70,8 +61,6 @@ $keyId = 'rzp_live_wqPZCNnh7ArGUx'; // Replace with your actual Razorpay Key ID
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $product['name']; ?></title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="product-style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -79,33 +68,21 @@ $keyId = 'rzp_live_wqPZCNnh7ArGUx'; // Replace with your actual Razorpay Key ID
     </header>
     <div class="product-detail">
         <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>">
-        <p><strong>Description:</strong> <?php echo $product['description']; ?></p>
-        
+        <p><?php echo $product['description']; ?></p>
         <h3>Reviews:</h3>
         <ul>
             <?php foreach ($product['reviews'] as $review): ?>
                 <li><?php echo $review; ?></li>
             <?php endforeach; ?>
         </ul>
-
+        
         <!-- Buy Now Button -->
-        <form id="razorpay-form" style="display: none;">
-            <script src="https://checkout.razorpay.com/v1/payment-button.js"
-                    data-payment_button_id="<?php echo $product['payment_button_id']; ?>"
-                    async>
+        <form>  
+            <script src="https://checkout.razorpay.com/v1/payment-button.js" 
+                data-payment_button_id="<?php echo $product['payment_button_id']; ?>" 
+                async>
             </script>
         </form>
-
-        <button id="pay-button" class="buy-button">Buy Now</button>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $("#pay-button").click(function() {
-                // Show the Razorpay payment button when the Buy Now button is clicked
-                $("#razorpay-form").toggle();
-            });
-        });
-    </script>
 </body>
 </html>
